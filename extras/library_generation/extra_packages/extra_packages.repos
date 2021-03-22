@@ -6,4 +6,4 @@ repositories:
   pipebot_msgs:
     type: git
     url: https://github.com/pipebots/pipebot-msgs.git
-    version: main
+    version: nfry321-fix-leds

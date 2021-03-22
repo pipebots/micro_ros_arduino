@@ -103,7 +103,8 @@ rclc_executor_get_zero_initialized_executor(void);
  *
  * \param[inout] e preallocated rclc_executor_t
  * \param[in] context RCL context
- * \param[in] number_of_handles size of the handle array
+ * \param[in] number_of_handles is the total number of subscriptions, timers, services,
+ *  clients and guard conditions. Do not include the number of nodes and publishers.
  * \param[in] allocator allocator for allocating memory
  * \return `RCL_RET_OK` if the executor was initialized successfully
  * \return `RCL_RET_INVALID_ARGUMENT` if any null pointer as argument
@@ -357,6 +358,39 @@ rclc_executor_add_service_with_request_id(
   void * request_msg,
   void * response_msg,
   rclc_service_callback_with_request_id_t callback);
+
+/**
+ *  Adds a service to an executor.
+ * * An error is returned if {@link rclc_executor_t.handles} array is full.
+ * * The total number_of_services field of {@link rclc_executor_t.info}
+ *   is incremented by one.
+ *
+ * <hr>
+ * Attribute          | Adherence
+ * ------------------ | -------------
+ * Allocates Memory   | No
+ * Thread-Safe        | No
+ * Uses Atomics       | No
+ * Lock-Free          | Yes
+ *
+ * \param [inout] executor pointer to initialized executor
+ * \param [in] service pointer to an allocated and initialized service
+ * \param [in] request_msg type-erased ptr to an allocated request message
+ * \param [in] response_msg type-erased ptr to an allocated response message
+ * \param [in] callback function pointer to a callback function with request_id
+ * \param [in] context type-erased ptr to additional service context
+ * \return `RCL_RET_OK` if add-operation was successful
+ * \return `RCL_RET_INVALID_ARGUMENT` if any parameter is a null pointer
+ * \return `RCL_RET_ERROR` if any other error occured
+ */
+rcl_ret_t
+rclc_executor_add_service_with_context(
+  rclc_executor_t * executor,
+  rcl_service_t * service,
+  void * request_msg,
+  void * response_msg,
+  rclc_service_callback_with_context_t callback,
+  void * context);
 
 /**
  *  Adds a guard_condition to an executor.

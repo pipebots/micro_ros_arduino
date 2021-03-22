@@ -12,7 +12,7 @@ rcl_allocator_t allocator;
 rclc_executor_t executor;
 
 rcl_service_t service;
-rcl_wait_set_t wait_set;
+// rcl_wait_set_t wait_set;
 
 example_interfaces__srv__AddTwoInts_Response res;
 example_interfaces__srv__AddTwoInts_Request req;
@@ -31,15 +31,17 @@ void service_callback(const void * req, void * res){
 
 void setup() {
   set_microros_transports();
-  delay(1000); 
+  delay(1000);
 
   allocator = rcl_get_default_allocator();
 
   // create init_options
   RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
-
   // create node
-  RCCHECK(rclc_node_init_default(&node, "add_twoints_client_rclc", "", &support));
+  node = rcl_get_zero_initialized_node();
+  rcl_node_options_t node_ops = rcl_node_get_default_options();
+  node_ops.domain_id = 20;
+  RCCHECK(rclc_node_init_with_options(&node, "add_twoints_client_rclc", "", &support, &node_ops));
 
   // create service
   RCCHECK(rclc_service_init_default(&service, &node, ROSIDL_GET_SRV_TYPE_SUPPORT(example_interfaces, srv, AddTwoInts), "/addtwoints"));
