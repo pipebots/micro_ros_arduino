@@ -53,6 +53,12 @@ enum
   pipebot_msgs__msg__Leds__DIAGNOSTIC_LIGHT = 5
 };
 
+/// Constant 'ALL_LIGHTS'.
+enum
+{
+  pipebot_msgs__msg__Leds__ALL_LIGHTS = 6
+};
+
 /// Constant 'FLASH_OFF'.
 enum
 {

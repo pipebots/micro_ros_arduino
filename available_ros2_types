@@ -245,3 +245,4 @@ pipebot_msgs/SensingPipeFeature.msg
 pipebot_msgs/Leds.msg
 pipebot_msgs/Rssi.msg
 pipebot_msgs/Connected.msg
+pipebot_msgs/ImuCalibrationStatus.msg
