@@ -3,3 +3,7 @@ repositories:
     type: git
     url: https://github.com/ros-controls/control_msgs
     version: foxy-devel
+  pipebot_msgs:
+    type: git
+    url: https://github.com/pipebots/pipebot-msgs.git
+    version: main
